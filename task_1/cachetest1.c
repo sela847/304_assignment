@@ -31,12 +31,21 @@ int main (int argc, char *argv[])
   
   /* variables for task 1 */
 
-  // L1: 32KB  L2:256KB   L3: 2 or 3 -> 8MB
-  unsigned int L1Max = 8192; // (32KB / 4Bytes (integer)) = 8192
-  unsigned int L3Max = 4194304; // (2 * 8MB  / 4 Bytes)
+  // Im using Intel(R) Core(TM) i5-10400F CPU @ 2.90GHz
+
+  // L1 cache:	384 KB
+	// L2 cache:	1.5 MB
+	// L3 cache:	12.0 MB
+
+  // Therefore we should test with N being half of L1 to being double L3
+  unsigned int L1 = 98304;
+  unsigned int L1Half = 98304/2; // (384KB / 4Bytes (integer)) = 98304
+  unsigned int L2 = 1572864; // (1.5MB / 4 Bytes) = 1572864
+  unsigned int L3 = 12582912;
+  unsigned int L3Double = 12582912*2; // (12 MB  / 4 Bytes) = 12582912
   unsigned int M = 1000;
   //unsigned int N = 256*1024; 
-  unsigned int N = L3Max;
+  unsigned int N = L1;
   unsigned int i;
   unsigned int sum = 0;
 	
