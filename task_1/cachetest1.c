@@ -45,12 +45,15 @@ int main (int argc, char *argv[])
   unsigned int L3Double = 12582912*2; // (12 MB  / 4 Bytes) = 12582912
   unsigned int M = 1000;
   //unsigned int N = 256*1024; 
-  unsigned int N = L1;
+  unsigned int N = L3Double;
   unsigned int i;
   unsigned int sum = 0;
+  unsigned int method = 1; // case 1: regularly iterate through a, otherwise do the randomising
 	
   /* declare variables; examples, adjust for task */
 	int *a;
+  int *b;
+  int num,num2,temp;
 
 	//double  a[100];
  
@@ -74,11 +77,23 @@ int main (int argc, char *argv[])
 
     
   /* allocate memory for arrays; examples, adjust for task */
-	 a = malloc (N * sizeof(int));
-
+	a = malloc (N * sizeof(int));
+  b = malloc (N*sizeof(int));
 	 /* initialise arrray elements */
   for (i = 0; i < N; i++) {
-    a[i] = 0; 
+    a[i] = 2*i;
+    b[i] = i; 
+  }
+
+  if (method!=1) {
+    for (i = 0; i<N;i++) {
+      num = rand() % N; // random number between 1 and N-1
+      temp = b[num];
+      num2 = rand() % N; // another random num
+      b[num] = b[num2];
+      b[num2] = temp;
+    }
+    
   }
 	 
   t1 = getTime();
@@ -86,13 +101,14 @@ int main (int argc, char *argv[])
   /***************************************/
   for (unsigned int j = 0; j<M;j++) { // M iterations
     for (i=0; i<N; i++) { // N iterations
-      sum += a[i];
+      sum += a[b[i]];
     }
   }
   /***************************************/
 	t2 = getTime(); 
   
   /* output; examples, adjust for task */
+  printf("Num1 and num2: %d, %d,%d\n",num,num2,temp);
   printf("M: %d, N: %d\n",M,N);
   printf("time: %6.2f secs\n",(t2 - t1));
   printf("Sum: %d\n",sum);
